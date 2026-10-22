@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TaskNest dashboard: manage tasks, subtasks and reminders offline.">
+  <meta name="theme-color" content="#4f46e5">
+  <title>Tasks — TaskNest</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12.5 10 17.5 19 7"></path>
+        </svg>
+      </span>
+      <a class="brand__name" href="/index.html">TaskNest</a>
+    </div>
+
+    <nav class="app-nav" aria-label="Main navigation">
+      <a class="nav-link is-active" href="/index.html" aria-current="page">Tasks</a>
+      <a class="nav-link" href="/focus.html">Focus</a>
+      <a class="nav-link" href="/stats.html">Stats</a>
+    </nav>
+
+    <div class="header__actions">
+      <span id="connection-badge" class="badge badge--online" role="status" aria-live="polite">Online</span>
+      <span id="pending-badge" class="badge badge--pending" hidden></span>
+      <span class="user-chip" data-user-name></span>
+      <button class="btn btn--ghost btn--small" type="button" data-theme-toggle aria-pressed="false">Dark mode</button>
+      <button class="btn btn--ghost btn--small" type="button" data-logout>Log out</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-heading">
+      <div>
+        <h1>Your tasks</h1>
+        <p id="task-summary" class="muted"></p>
+      </div>
+      <div class="page-heading__actions">
+        <button id="reminder-btn" class="btn btn--ghost btn--small" type="button">Enable reminders</button>
+        <button id="add-task-btn" class="btn btn--primary" type="button">Add task</button>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="tabs" role="tablist" aria-label="Filter tasks by status">
+        <button class="tab is-active" type="button" role="tab" aria-selected="true" data-filter="all">All</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-filter="active">Active</button>
+        <button class="tab" type="button" role="tab" aria-selected="false" data-filter="done">Done</button>
+      </div>
+
+      <div class="filters">
+        <label class="visually-hidden" for="category-filter">Filter by category</label>
+        <select id="category-filter">
+          <option value="">All categories</option>
+        </select>
+
+        <label class="visually-hidden" for="search-input">Search tasks</label>
+        <input id="search-input" type="search" placeholder="Search tasks…" autocomplete="off">
+      </div>
+    </div>
+
+    <p id="offline-notice" class="notice" hidden>
+      You are offline. Changes are saved on this device and synced when you reconnect.
+    </p>
+    <p id="status-message" class="notice notice--error" role="alert" hidden></p>
+    <p id="loading" class="loading" role="status">Loading tasks…</p>
+
+    <section id="task-grid" class="task-grid" aria-label="Tasks"></section>
+    <p id="empty-state" class="empty-state" hidden>No tasks yet. Add your first one.</p>
+    <noscript><p class="notice notice--error">TaskNest needs JavaScript to work.</p></noscript>
+  </main>
+
+  <div id="task-modal" class="modal" hidden>
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal__header">
+        <h2 id="modal-title">Add task</h2>
+        <button class="icon-btn" type="button" data-close-modal aria-label="Close dialog">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18"></path>
+          </svg>
+        </button>
+      </div>
+
+      <form id="task-form" novalidate>
+        <input type="hidden" id="task-id">
+
+        <div class="field">
+          <label for="task-title">Title <span class="required" aria-hidden="true">*</span></label>
+          <input id="task-title" type="text" maxlength="100" required autocomplete="off">
+          <p id="title-error" class="field__error" role="alert" hidden>Please enter a title (up to 100 characters).</p>
+        </div>
+
+        <div class="field">
+          <label for="task-notes">Notes</label>
+          <textarea id="task-notes" rows="3" maxlength="2000"></textarea>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority">
+              <option value="Low">Low</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="task-due">Due date</label>
+            <input id="task-due" type="date">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="task-category">Category</label>
+          <input id="task-category" type="text" maxlength="40" list="category-suggestions" placeholder="e.g. Work">
+          <datalist id="category-suggestions"></datalist>
+        </div>
+
+        <fieldset class="subtask-editor">
+          <legend>Subtasks</legend>
+          <ul id="subtask-list" class="subtask-list"></ul>
+
+          <div class="subtask-add">
+            <label class="visually-hidden" for="new-subtask">New subtask</label>
+            <input id="new-subtask" type="text" maxlength="120" placeholder="Add a subtask">
+            <button id="add-subtask-btn" class="btn btn--ghost btn--small" type="button">Add</button>
+          </div>
+        </fieldset>
+
+        <div class="modal__actions">
+          <button class="btn btn--ghost" type="button" data-close-modal>Cancel</button>
+          <button id="modal-submit" class="btn btn--primary" type="submit">Add task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/api.js" defer></script>
+  <script src="/js/auth.js" defer></script>
+  <script src="/js/db.js" defer></script>
+  <script src="/js/app.js" defer></script>
+</body>
+</html>

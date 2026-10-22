@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Log in to TaskNest, your offline-first to-do manager.">
+  <meta name="theme-color" content="#4f46e5">
+  <title>Log in — TaskNest</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="auth-page">
+  <header class="app-header app-header--simple">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12.5 10 17.5 19 7"></path>
+        </svg>
+      </span>
+      <a class="brand__name" href="/login.html">TaskNest</a>
+    </div>
+    <button class="btn btn--ghost btn--small" type="button" data-theme-toggle aria-pressed="false">Dark mode</button>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-card" aria-labelledby="login-title">
+      <h1 id="login-title">Welcome back</h1>
+      <p class="muted">Log in to sync your tasks, focus sessions and stats.</p>
+
+      <form id="login-form" novalidate>
+        <div id="form-error" class="notice notice--error" role="alert" hidden></div>
+
+        <div class="field">
+          <label for="login-email">Email</label>
+          <input id="login-email" name="email" type="email" autocomplete="email" required>
+        </div>
+
+        <div class="field">
+          <label for="login-password">Password</label>
+          <input id="login-password" name="password" type="password" autocomplete="current-password" required>
+        </div>
+
+        <button class="btn btn--primary btn--block" type="submit">Log in</button>
+      </form>
+
+      <p class="auth-switch">New to TaskNest? <a href="/register.html">Create an account</a></p>
+    </section>
+  </main>
+
+  <script src="/js/api.js" defer></script>
+  <script src="/js/auth.js" defer></script>
+</body>
+</html>

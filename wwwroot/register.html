@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Create a TaskNest account and start organising your day.">
+  <meta name="theme-color" content="#4f46e5">
+  <title>Create account — TaskNest</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="auth-page">
+  <header class="app-header app-header--simple">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12.5 10 17.5 19 7"></path>
+        </svg>
+      </span>
+      <a class="brand__name" href="/login.html">TaskNest</a>
+    </div>
+    <button class="btn btn--ghost btn--small" type="button" data-theme-toggle aria-pressed="false">Dark mode</button>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-card" aria-labelledby="register-title">
+      <h1 id="register-title">Create your account</h1>
+      <p class="muted">A name, an email and a password — that's all you need.</p>
+
+      <form id="register-form" novalidate>
+        <div id="form-error" class="notice notice--error" role="alert" hidden></div>
+
+        <div class="field">
+          <label for="register-name">Name</label>
+          <input id="register-name" name="name" type="text" autocomplete="name" maxlength="80" required>
+        </div>
+
+        <div class="field">
+          <label for="register-email">Email</label>
+          <input id="register-email" name="email" type="email" autocomplete="email" maxlength="200" required>
+        </div>
+
+        <div class="field">
+          <label for="register-password">Password</label>
+          <input id="register-password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+          <p class="field__hint">At least 8 characters.</p>
+        </div>
+
+        <button class="btn btn--primary btn--block" type="submit">Create account</button>
+      </form>
+
+      <p class="auth-switch">Already have an account? <a href="/login.html">Log in</a></p>
+    </section>
+  </main>
+
+  <script src="/js/api.js" defer></script>
+  <script src="/js/auth.js" defer></script>
+</body>
+</html>

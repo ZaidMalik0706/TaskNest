@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#4f46e5">
+  <title>Offline — TaskNest</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="offline-page">
+  <header class="app-header app-header--simple">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12.5 10 17.5 19 7"></path>
+        </svg>
+      </span>
+      <a class="brand__name" href="/index.html">TaskNest</a>
+    </div>
+    <button class="btn btn--ghost btn--small" type="button" data-theme-toggle aria-pressed="false">Dark mode</button>
+  </header>
+
+  <main class="offline-main">
+    <section class="offline-card">
+      <h1>You're offline</h1>
+      <p>This page isn't available offline yet. Tasks you saved are still on this device and will sync when you reconnect.</p>
+      <div class="offline-actions">
+        <a class="btn btn--primary" href="/index.html">Go to tasks</a>
+        <button class="btn btn--ghost" type="button" onclick="location.reload()">Try again</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/api.js" defer></script>
+  <script src="/js/auth.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# Taste — TaskNest / Web Project Preferences
+- Prefers simple, minimal, professional implementations and explicitly rejects over-engineering ("no over-engineering"). Confidence: 0.85
+- Avoids frontend frameworks and third-party frontend libraries — wants plain HTML/CSS/vanilla JS, with things like charts drawn by hand in CSS or inline SVG instead of pulled from a library. Confidence: 0.85
+- Never hardcodes secrets: signing keys and connection strings belong in user-secrets for development and environment variables (e.g. `Jwt__Key`) for production, never in committed config. Confidence: 0.9
+- Security-minded about data isolation: every query is scoped to the authenticated user from the JWT claims, and another user's record returns 404 (not 403) so its existence isn't leaked. Confidence: 0.65
+- Escapes user-supplied text when rendering (`textContent`, never `innerHTML` for user content) — treats XSS as a real concern even in small demo apps. Confidence: 0.85
+- Favours a layered but lightweight backend: service interface + implementation registered via DI, thin attribute-routed controllers, data validation attributes, proper HTTP status codes (200/201/204/400/404). Confidence: 0.65
+- Prefers ASP.NET Core Web API (.NET 8) + EF Core with SQLite, initial migration auto-applied on startup. Confidence: 0.6
+- Wants mobile-first responsive CSS: Flexbox for header/nav, CSS Grid with `repeat(auto-fit, minmax(250px, 1fr))` for card layouts, and a small fixed set of breakpoints (a `@media (min-width: 768px)` plus a `@media (min-width: 1024px)`) rather than a sprawl of media queries. Confidence: 0.8
+- Cares about accessibility and touch ergonomics: minimum 44px touch targets, 16px base font, viewport meta tag, WCAG AA contrast, semantic HTML, aria-labels, and visible focus styles. Confidence: 0.8
+- Prefers a restrained, clean visual style: neutral palette, one accent colour, subtle shadows, no heavy animations, no gradients or gimmicks. Confidence: 0.8
+- Prefers code written to be readable by a student: small files, short functions, and explanatory comments at a teaching level rather than dense or clever code. Confidence: 0.8
+- Dislikes intrusive UX: asks for permission prompts only in response to an explicit user click, never automatically on page load. Confidence: 0.55
+- Splits frontend JS into small focused modules (e.g. `api.js` for fetch wrappers with error handling, `app.js` for rendering/events). Confidence: 0.6
+- Wants work delivered in explicit phases (e.g. backend → frontend → PWA), with a summary of what was done and how to test it after each phase before continuing. Confidence: 0.8
+- Expects a short, practical README covering setup steps, folder structure, and an endpoint table. Confidence: 0.65
+- Values verification over claims: expects the app actually run and exercised (`dotnet run`, real browser interaction, Lighthouse audits) rather than asserted to work, and expects quality gates to be fixed until met (e.g. Performance/Accessibility/PWA all 90+). Confidence: 0.75

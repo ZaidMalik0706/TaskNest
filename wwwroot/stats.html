@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Your TaskNest weekly completion chart, streak and focus totals.">
+  <meta name="theme-color" content="#4f46e5">
+  <title>Stats — TaskNest</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12.5 10 17.5 19 7"></path>
+        </svg>
+      </span>
+      <a class="brand__name" href="/index.html">TaskNest</a>
+    </div>
+
+    <nav class="app-nav" aria-label="Main navigation">
+      <a class="nav-link" href="/index.html">Tasks</a>
+      <a class="nav-link" href="/focus.html">Focus</a>
+      <a class="nav-link is-active" href="/stats.html" aria-current="page">Stats</a>
+    </nav>
+
+    <div class="header__actions">
+      <span id="connection-badge" class="badge badge--online" role="status" aria-live="polite">Online</span>
+      <span class="user-chip" data-user-name></span>
+      <button class="btn btn--ghost btn--small" type="button" data-theme-toggle aria-pressed="false">Dark mode</button>
+      <button class="btn btn--ghost btn--small" type="button" data-logout>Log out</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-heading">
+      <div>
+        <h1>Your stats</h1>
+        <p class="muted">A quick look at the last seven days.</p>
+      </div>
+    </div>
+
+    <p id="offline-notice" class="notice" hidden>
+      You are offline. Showing the last saved stats.
+    </p>
+    <p id="status-message" class="notice notice--error" role="alert" hidden></p>
+    <p id="loading" class="loading" role="status">Loading stats…</p>
+
+    <section class="stat-grid" aria-label="Summary">
+      <article class="stat-card">
+        <span class="stat-label">Current streak</span>
+        <strong class="stat-value" id="streak-value">0</strong>
+        <span class="stat-unit">days in a row</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Focus this week</span>
+        <strong class="stat-value" id="focus-value">0</strong>
+        <span class="stat-unit">minutes</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">Overdue tasks</span>
+        <strong class="stat-value" id="overdue-value">0</strong>
+        <span class="stat-unit">need attention</span>
+      </article>
+    </section>
+
+    <section class="chart-card" aria-labelledby="chart-title">
+      <h2 id="chart-title">Completed · last 7 days</h2>
+      <div id="bar-chart" class="bar-chart" role="img" aria-label="Completed tasks per day"></div>
+    </section>
+  </main>
+
+  <script src="/js/api.js" defer></script>
+  <script src="/js/auth.js" defer></script>
+  <script src="/js/db.js" defer></script>
+  <script src="/js/stats.js" defer></script>
+</body>
+</html>

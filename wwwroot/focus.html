@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Run a 25-minute focus session on a TaskNest task.">
+  <meta name="theme-color" content="#4f46e5">
+  <title>Focus — TaskNest</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12.5 10 17.5 19 7"></path>
+        </svg>
+      </span>
+      <a class="brand__name" href="/index.html">TaskNest</a>
+    </div>
+
+    <nav class="app-nav" aria-label="Main navigation">
+      <a class="nav-link" href="/index.html">Tasks</a>
+      <a class="nav-link is-active" href="/focus.html" aria-current="page">Focus</a>
+      <a class="nav-link" href="/stats.html">Stats</a>
+    </nav>
+
+    <div class="header__actions">
+      <span id="connection-badge" class="badge badge--online" role="status" aria-live="polite">Online</span>
+      <span class="user-chip" data-user-name></span>
+      <button class="btn btn--ghost btn--small" type="button" data-theme-toggle aria-pressed="false">Dark mode</button>
+      <button class="btn btn--ghost btn--small" type="button" data-logout>Log out</button>
+    </div>
+  </header>
+
+  <main class="container container--narrow">
+    <div class="page-heading">
+      <div>
+        <h1>Focus session</h1>
+        <p class="muted">25 minutes, one task, no distractions.</p>
+      </div>
+    </div>
+
+    <p id="offline-notice" class="notice" hidden>
+      You are offline. The timer works, but the finished session cannot be saved until you reconnect.
+    </p>
+    <p id="status-message" class="notice notice--error" role="alert" hidden></p>
+
+    <section class="focus-card" aria-labelledby="focus-heading">
+      <h2 id="focus-heading" class="visually-hidden">Timer</h2>
+
+      <div class="field">
+        <label for="focus-task">Task</label>
+        <select id="focus-task">
+          <option value="">Select a task</option>
+        </select>
+      </div>
+
+      <p id="timer" class="timer" role="timer" aria-label="25 minutes remaining">25:00</p>
+      <p id="timer-status" class="muted timer-status" role="status" aria-live="polite">Ready to start.</p>
+
+      <div class="timer__actions">
+        <button id="start-btn" class="btn btn--primary" type="button">Start</button>
+        <button id="pause-btn" class="btn btn--ghost" type="button" disabled>Pause</button>
+        <button id="reset-btn" class="btn btn--ghost" type="button">Reset</button>
+      </div>
+
+      <p class="field__hint">A completed session is logged to your weekly focus total.</p>
+    </section>
+  </main>
+
+  <script src="/js/api.js" defer></script>
+  <script src="/js/auth.js" defer></script>
+  <script src="/js/db.js" defer></script>
+  <script src="/js/focus.js" defer></script>
+</body>
+</html>

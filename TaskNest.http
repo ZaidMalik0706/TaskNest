@@ -1,0 +1,110 @@
+@host = http://localhost:5299
+@token = paste-the-token-from-login-here
+@taskId = 11111111-1111-1111-1111-111111111111
+@subtaskId = 22222222-2222-2222-2222-222222222222
+
+### Register (returns a JWT)
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Alice",
+  "email": "alice@example.com",
+  "password": "password123"
+}
+
+### Login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "alice@example.com",
+  "password": "password123"
+}
+
+### Current user
+GET {{host}}/api/auth/me
+Authorization: Bearer {{token}}
+
+### List tasks (optional status, category, q)
+GET {{host}}/api/tasks?status=active&q=readme
+Authorization: Bearer {{token}}
+
+### Create or idempotently update a task
+POST {{host}}/api/tasks
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "{{taskId}}",
+  "title": "Write project README",
+  "notes": "Setup, structure, endpoints, offline sync",
+  "priority": "High",
+  "category": "Study",
+  "dueDate": "2026-11-01T00:00:00",
+  "isDone": false
+}
+
+### Get one task
+GET {{host}}/api/tasks/{{taskId}}
+Authorization: Bearer {{token}}
+
+### Replace a task
+PUT {{host}}/api/tasks/{{taskId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "{{taskId}}",
+  "title": "Write project README",
+  "notes": "Updated notes",
+  "priority": "Medium",
+  "category": "Study",
+  "dueDate": null,
+  "isDone": false
+}
+
+### Toggle done
+PATCH {{host}}/api/tasks/{{taskId}}/toggle
+Authorization: Bearer {{token}}
+
+### Add a subtask (client-generated id)
+POST {{host}}/api/tasks/{{taskId}}/subtasks
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "{{subtaskId}}",
+  "title": "Add endpoint table"
+}
+
+### Update a subtask
+PATCH {{host}}/api/tasks/{{taskId}}/subtasks/{{subtaskId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "isDone": true
+}
+
+### Delete a subtask
+DELETE {{host}}/api/tasks/{{taskId}}/subtasks/{{subtaskId}}
+Authorization: Bearer {{token}}
+
+### Log a 25-minute focus session
+POST {{host}}/api/focus
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "taskId": "{{taskId}}",
+  "minutes": 25
+}
+
+### Stats
+GET {{host}}/api/stats
+Authorization: Bearer {{token}}
+
+### Delete a task
+DELETE {{host}}/api/tasks/{{taskId}}
+Authorization: Bearer {{token}}
